@@ -8,9 +8,7 @@ class Receipt(SQLModel, table=True):
     date: datetime.datetime = Field(nullable=False)
     market_id: uuid.UUID = Field(foreign_key='marketplace.id', nullable=False)
     total: float = Field(nullable=False)
-    items: list['Item'] = Relationship(
-        back_populates='receipt', nullable=False
-    )
+    items: list['Item'] = Relationship(back_populates='receipt')
 
 
 class Item(SQLModel, table=True):
@@ -20,7 +18,7 @@ class Item(SQLModel, table=True):
         default=None, foreign_key='receipt.id'
     )
     unit_price: float = Field(nullable=False)
-    receipt: Receipt = Relationship(back_populates='items', nullable=False)
+    receipt: Receipt = Relationship(back_populates='items')
 
 
 class Marketplace(SQLModel, table=True):
